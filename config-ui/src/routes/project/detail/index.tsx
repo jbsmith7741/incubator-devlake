@@ -21,7 +21,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { Helmet } from 'react-helmet';
-import { Tabs, message } from 'antd';
+import { Tabs, message, Empty, Button } from 'antd';
 
 import API from '@/api';
 import { PageHeader, PageLoading } from '@/components';
@@ -92,7 +92,18 @@ export const ProjectDetailPage = () => {
             {
               key: 'blueprint',
               label: 'Blueprint',
-              children: <BlueprintDetail id={data.blueprint.id} from={FromEnum.project} />,
+              children: data.blueprint ? (
+                <BlueprintDetail id={data.blueprint.id} from={FromEnum.project} />
+              ) : (
+                <Empty
+                  description="No blueprint is associated with this project."
+                  style={{ padding: '60px 0' }}
+                >
+                  <Button type="primary" onClick={() => navigate(PATHS.BLUEPRINTS())}>
+                    Go to Blueprints
+                  </Button>
+                </Empty>
+              ),
             },
             {
               key: 'webhook',
