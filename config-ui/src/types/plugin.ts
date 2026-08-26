@@ -16,6 +16,10 @@
  *
  */
 
+import { IConnection } from './connection';
+
+export type IConnectionMetaVariant = 'list' | 'detail';
+
 export interface IPluginConfig {
   plugin: string;
   name: string;
@@ -28,6 +32,10 @@ export interface IPluginConfig {
     docLink: string;
     initialValues?: Record<string, any>;
     fields: any[];
+    formatTestMessage?: (result: any) => string;
+    onTestSuccess?: (result: any, ctx: { setValues: (patch: Record<string, any>) => void }) => void;
+    renderTestSummary?: (result: any) => React.ReactNode;
+    renderConnectionMeta?: (connection: IConnection, variant: IConnectionMetaVariant) => React.ReactNode;
   };
   dataScope: {
     localSearch?: boolean;
